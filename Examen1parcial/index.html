@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuyChart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <style>
+      .FondoP{
+        background-image: url("Img/FondoP.jpg");
+      }
+      .text{
+        color: white;
+    }
+    </style>
+</head>
+<body class="FondoP text">
+    <h1 align="center"><i>Bienvenido a BuyChart</i></h1>
+    <table width="100%">
+        <tr>
+          <td align="center">
+              <img src="https://www.steren.com.mx/media/catalog/product/cache/1e90c885204fbc854e8a8fc4f690e06b/a/u/aud-2550_x1.jpg" width="200" height="200"><br>
+              <label>Audifonos</label><br>
+              <input type="hidden" value="Audifonos" id="nuevoProducto">
+              <label>$400</label><br>
+              <input type="hidden" value="400" id="nuevaPrecioU">
+              Cantidad: <input id="nuevaCantidadProducto" type="number"><br>
+              <button id="agregar">Agregar</button>
+          </td>
+          <td align="center">
+            <img src="https://shop.westerndigital.com/content/dam/store/en-us/assets/products/internal-storage/wd-red-sata-ssd/gallery/wd-red-sata-ssd-1tb.png" width="200" height="200"><br>
+            <label >SSD</label><br>
+            <input type="hidden" value="SSD" id="nuevoProducto2">
+            <label >$1700</label><br>
+            <input type="hidden" value="1700" id="nuevaPrecioU2">
+            Cantidad: <input id="nuevaCantidadProducto2" type="number"><br>
+            <button id="agregar2">Agregar</button>
+        </td>
+        <td align="center">
+            <img src="https://www.altonivel.com.mx/wp-content/uploads/2020/05/amazon1.jpg" width="200" height="200"><br>
+            <label >Computadora</label><br>
+            <input type="hidden" value="Computadora" id="nuevoProducto3">
+            <label >$6400</label><br>
+            <input type="hidden" value="6400" id="nuevaPrecioU3">
+            Cantidad: <input id="nuevaCantidadProducto3" type="number"><br>
+            <button id="agregar3">Agregar</button>
+        </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <img src="https://m.media-amazon.com/images/I/610Z1NlZiQL._AC_SX679_.jpg" width="200" height="200"><br>
+                <label >WebCam</label><br>
+                <input type="hidden" value="WebCam" id="nuevoProducto4">
+                <label >$200</label><br>
+                <input type="hidden" value="200" id="nuevaPrecioU4">
+                Cantidad: <input  id="nuevaCantidadProducto4" type="number"><br>
+                <button id="agregar4">Agregar</button>
+            </td>
+            <td align="center">
+                <img src="https://resource.logitechg.com/w_460,c_limit,q_auto,f_auto,b_rgb:f4f4f4,dpr_2.0/d_transparent.gif/content/dam/gaming/en/products/refreshed-g203/g203-hero.png?v=1" width="200" height="200"><br>
+                <label >Mouse</label><br>
+                <input type="hidden" value="Mouse" id="nuevoProducto5">
+                <label >$180</label><br>
+                <input type="hidden" value="180" id="nuevaPrecioU5">
+                Cantidad: <input id="nuevaCantidadProducto5" type="number"><br>
+                <button id="agregar5">Agregar</button>
+            </td>
+            <td align="center">
+                <img src="https://m.media-amazon.com/images/I/71C0QuZ2ijL._AC_SY355_.jpg" width="200" height="200"><br>
+                <label >Teclado</label><br>
+                <input type="hidden" value="Teclado" id="nuevoProducto6">
+                <label >$850</label><br>
+                <input type="hidden" value="850" id="nuevaPrecioU6">
+                Cantidad: <input id="nuevaCantidadProducto6" type="number"><br>
+                <button id="agregar6">Agregar</button>
+            </td>
+        </tr>
+      </table>
+      
+      <table id="table">
+        <tr>
+          <td>Producto</td>
+          <td>Precio</td>
+          <td>Cantidad</td>
+          <td>Subtotal</td>
+        </tr>
+      </table>
+      <!--Grafica-->
+      <p>Total: <span id="Total"></span></p>
+      <canvas id="myChart" width="50" height="50"></canvas>
+
+      <script>
+          let total = [];// el array de los subtotales
+      
+      agregar.addEventListener("click",()=>{
+        let producto = nuevoProducto.value;
+        let cantidad = Number(nuevaPrecioU.value);
+        let precio = Number(nuevaCantidadProducto.value);
+        let subtotal = cantidad * precio;
+        total.push(subtotal)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR = `
+        <tr>
+          <td>${producto}</td>
+          <td>${cantidad}</td>
+          <td>${precio}</td>
+          <td>${subtotal}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+      
+      agregar2.addEventListener("click",()=>{
+        let producto2 = nuevoProducto2.value;
+        let cantidad2 = Number(nuevaPrecioU2.value);
+        let precio2 = Number(nuevaCantidadProducto2.value);
+        let subtotal2 = cantidad2 * precio2;
+        total.push(subtotal2)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR2 = `
+        <tr>
+          <td>${producto2}</td>
+          <td>${cantidad2}</td>
+          <td>${precio2}</td>
+          <td>${subtotal2}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR2;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+
+      agregar3.addEventListener("click",()=>{
+        let producto3 = nuevoProducto3.value;
+        let cantidad3 = Number(nuevaPrecioU3.value);
+        let precio3 = Number(nuevaCantidadProducto3.value);
+        let subtotal3 = cantidad3 * precio3;
+        total.push(subtotal3)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR3 = `
+        <tr>
+          <td>${producto3}</td>
+          <td>${cantidad3}</td>
+          <td>${precio3}</td>
+          <td>${subtotal3}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR3;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+
+      agregar4.addEventListener("click",()=>{
+        let producto4 = nuevoProducto4.value;
+        let cantidad4 = Number(nuevaPrecioU4.value);
+        let precio4 = Number(nuevaCantidadProducto4.value);
+        let subtotal4 = cantidad4 * precio4;
+        total.push(subtotal4)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR4 = `
+        <tr>
+          <td>${producto4}</td>
+          <td>${cantidad4}</td>
+          <td>${precio4}</td>
+          <td>${subtotal4}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR4;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+
+      agregar5.addEventListener("click",()=>{
+        let producto5 = nuevoProducto5.value;
+        let cantidad5 = Number(nuevaPrecioU5.value);
+        let precio5 = Number(nuevaCantidadProducto5.value);
+        let subtotal5 = cantidad5 * precio5;
+        total.push(subtotal5)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR5 = `
+        <tr>
+          <td>${producto5}</td>
+          <td>${cantidad5}</td>
+          <td>${precio5}</td>
+          <td>${subtotal5}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR5;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+
+      agregar6.addEventListener("click",()=>{
+        let producto6 = nuevoProducto6.value;
+        let cantidad6 = Number(nuevaPrecioU6.value);
+        let precio6 = Number(nuevaCantidadProducto6.value);
+        let subtotal6 = cantidad6 * precio6;
+        total.push(subtotal6)
+        // crea la estructura de una nueva fila de tabla
+        let nuevoTR6 = `
+        <tr>
+          <td>${producto6}</td>
+          <td>${cantidad6}</td>
+          <td>${precio6}</td>
+          <td>${subtotal6}</td>
+        </tr>
+      `;
+        //agrega la nueva fila a la tabla
+        table.innerHTML += nuevoTR6;
+        //recalcula el total de los subtotales 
+        Total.innerHTML = total.reduce(sumar);
+      })
+
+      // una función utilizada con reduce para calcular el total
+      function sumar(a, b) {
+        return a + b;
+      }
+      
+
+      var ctx = document.getElementById('myChart').getContext('2d');
+      
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Audifonos', 'SSD', 'Computadora', 'WebCam', 'Mouse', 'Teclado'],
+        datasets: [{
+            label: '# of Votes',
+            data: [400, 1700, 6400, 200, 180, 850],
+            backgroundColor: [
+                'rgba(255, 99, 132)',
+                'rgba(54, 162, 235)',
+                'rgba(255, 206, 86)',
+                'rgba(75, 192, 192)',
+                'rgba(153, 102, 255)',
+                'rgba(255, 159, 64)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+      </script>
+</body>
+
+</html>
